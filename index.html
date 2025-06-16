@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Sign Up Form with Icons</title>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Basic page styling */
+        body {
+            font-family: sans-serif;
+            background-color: #f9f9f9; /* Very light background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #444; /* Standard text color */
+        }
+
+        /* Form container */
+        .form-container {
+            background-color: #fff; /* White form background */
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Simple shadow */
+            width: 100%;
+            max-width: 350px; /* Narrower form */
+            box-sizing: border-box;
+        }
+
+        /* Form title */
+        h2 {
+            text-align: center;
+            color: #5a9; /* Teal color */
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        /* Space between form fields */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Label styling */
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        /* Container for input and icon */
+        .input-container {
+            position: relative; /* Needed to position the icon absolutely inside */
+            display: flex; /* Use flexbox to align icon and input */
+            align-items: center; /* Vertically align items */
+        }
+
+        /* Styling for input fields */
+        .form-group input {
+            width: 100%;
+            padding: 8px 8px 8px 35px; /* Add left padding for icon */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+            /* flex-grow: 1; Optional: makes input take up available space */
+        }
+
+        /* Input focus state */
+        .form-group input:focus {
+            outline: none;
+            border-color: #5a9; /* Highlight with teal */
+            box-shadow: 0 0 3px rgba(85, 170, 153, 0.4); /* Simple glow */
+        }
+
+        /* Styling for icons inside the input container */
+        .input-container i {
+            position: absolute; /* Position icon over the input area */
+            left: 10px; /* Distance from the left edge */
+            color: #888; /* Grey color for icons */
+            font-size: 1em; /* Icon size */
+            /* z-index: 1; Ensure icon is above input if needed, though padding helps */
+        }
+
+        /* Styling for error messages (hidden by default) */
+        .error-message {
+            color: #d9534f; /* Red color for errors */
+            font-size: 0.75em;
+            margin-top: 3px;
+            visibility: hidden; /* Hide initially */
+            min-height: 1em; /* Reserve space to prevent layout shifts */
+        }
+
+        /* Class added by JS to show error message */
+        .form-group.has-error .error-message {
+            visibility: visible; /* Make visible */
+        }
+
+        /* Highlight input with red border when error */
+        .form-group.has-error input {
+            border-color: #d9534f; /* Red border */
+        }
+
+
+        /* Sign Up button styling */
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #5a9; /* Teal button color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s ease; /* Quick transition */
+        }
+
+        /* Button hover state */
+        button[type="submit"]:hover {
+            background-color: #4a8a7d; /* Darker teal on hover */
+        }
+
+        /* Button active state */
+         button[type="submit"]:active {
+             background-color: #3a7a6d; /* Even darker teal when pressed */
+         }
+
+         /* Simple success message styling */
+        .success-message {
+            color: #5cb85c; /* Green color */
+            font-size: 0.9em;
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #dff0d8; /* Light green background */
+            border: 1px solid #d0e9c6; /* Green border */
+            border-radius: 4px;
+            display: none; /* Hidden by default */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Sign Up</h2>
+        <form id="signupForm" novalidate> <!-- novalidate prevents default browser validation -->
+
+            <!-- Full Name Field -->
+            <div class="form-group">
+                <label for="fullName">Full Name:</label>
+                <div class="input-container">
+                    <i class="fas fa-user"></i> <!-- User icon -->
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name">
+                </div>
+                <div class="error-message" id="fullName-error"></div> <!-- Area for error -->
+            </div>
+
+            <!-- Email Address Field -->
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <div class="input-container">
+                     <i class="fas fa-envelope"></i> <!-- Envelope icon -->
+                    <input type="email" id="email" name="email" placeholder="Enter your email">
+                </div>
+                <div class="error-message" id="email-error"></div> <!-- Area for error -->
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password">Password:</label>
+                 <div class="input-container">
+                    <i class="fas fa-lock"></i> <!-- Lock icon -->
+                    <input type="password" id="password" name="password" placeholder="Min 8 characters">
+                 </div>
+                <div class="error-message" id="password-error"></div> <!-- Area for error -->
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password:</label>
+                <div class="input-container">
+                    <i class="fas fa-lock"></i> <!-- Lock icon -->
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+                </div>
+                <div class="error-message" id="confirmPassword-error"></div> <!-- Area for error -->
+            </div>
+
+            <!-- Mobile Number Field -->
+            <div class="form-group">
+                <label for="mobileNumber">Mobile Number:</label>
+                <div class="input-container">
+                    <i class="fas fa-mobile-alt"></i> <!-- Mobile icon -->
+                    <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Enter mobile number">
+                </div>
+                <div class="error-message" id="mobileNumber-error"></div> <!-- Area for error -->
+            </div>
+
+            <!-- Sign Up Button -->
+            <button type="submit">Sign Up</button>
+
+             <!-- Success Message (initially hidden) -->
+            <div class="success-message" id="successMessage">
+                Sign up successful!
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        // Get the form element
+        const form = document.getElementById('signupForm');
+        const successMessage = document.getElementById('successMessage');
+
+        // Add event listener for form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default browser form submission
+
+            // Clear previous error messages and styling
+            clearErrors();
+
+            // Validate all fields and check if the form is valid
+            const isValid = validateForm();
+
+            // If the form is valid, simulate submission
+            if (isValid) {
+                console.log('Form is valid. Submitting...');
+                // In a real application, you would send data to a server here.
+                // For this example, we just show a success message.
+
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.textContent = 'Signing Up...'; // Change button text
+                submitButton.disabled = true; // Disable button
+
+                // Simulate success message display and form reset
+                setTimeout(() => {
+                     successMessage.style.display = 'block';
+                     form.reset(); // Clear the form inputs
+                     submitButton.textContent = 'Sign Up'; // Reset button text
+                     submitButton.disabled = false; // Re-enable button
+
+                     // Hide success message after a few seconds
+                     setTimeout(() => {
+                         successMessage.style.display = 'none';
+                     }, 3000);
+
+                }, 1000); // Simulate a 1 second processing delay
+
+
+            } else {
+                console.log('Form has errors.');
+                 // Find the first field with an error and focus it
+                 const firstErrorField = form.querySelector('.form-group.has-error input');
+                 if (firstErrorField) {
+                     firstErrorField.focus();
+                 }
+            }
+        });
+
+        // Function to validate the entire form
+        function validateForm() {
+            let valid = true; // Assume valid until an error is found
+
+            // Get input elements
+            const fullNameInput = document.getElementById('fullName');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const mobileNumberInput = document.getElementById('mobileNumber');
+
+            // Get trimmed input values
+            const fullName = fullNameInput.value.trim();
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+            const confirmPassword = confirmPasswordInput.value.trim();
+            const mobileNumber = mobileNumberInput.value.trim();
+
+            // --- Validation Checks ---
+
+            // Full Name check
+            if (fullName === '') {
+                displayError(fullNameInput, 'Full Name is required.');
+                valid = false;
+            }
+
+            // Email check (basic format)
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '') {
+                displayError(emailInput, 'Email Address is required.');
+                valid = false;
+            } else if (!emailRegex.test(email)) {
+                displayError(emailInput, 'Enter a valid email.');
+                valid = false;
+            }
+
+            // Password check (min 8 chars)
+            if (password === '') {
+                displayError(passwordInput, 'Password is required.');
+                valid = false;
+            } else if (password.length < 8) {
+                displayError(passwordInput, 'Password must be at least 8 characters.');
+                valid = false;
+            }
+
+            // Confirm Password check (must match password)
+            if (confirmPassword === '') {
+                displayError(confirmPasswordInput, 'Confirm Password is required.');
+                valid = false;
+            } else if (confirmPassword !== password) {
+                displayError(confirmPasswordInput, 'Passwords do not match.');
+                valid = false;
+            }
+
+            // Mobile Number check (basic 10-15 digits, optional +)
+            const mobileRegex = /^\+?[0-9]{10,15}$/;
+             if (mobileNumber === '') {
+                 displayError(mobileNumberInput, 'Mobile Number is required.');
+                 valid = false;
+             } else if (!mobileRegex.test(mobileNumber)) {
+                 displayError(mobileNumberInput, 'Enter a valid mobile number.');
+                 valid = false;
+             }
+
+
+            // Return true if all checks passed, false otherwise
+            return valid;
+        }
+
+        // Function to display an error message for a specific input element
+        function displayError(inputElement, message) {
+            // Find the parent form-group element of the input using closest()
+            const formGroup = inputElement.closest('.form-group');
+            // Find the error message element within that group
+            const errorElement = formGroup.querySelector('.error-message');
+
+            formGroup.classList.add('has-error'); // Add class for styling (e.g., red border)
+            errorElement.textContent = message; // Set the error text
+            errorElement.style.visibility = 'visible'; // Make it visible
+        }
+
+        // Function to clear all error messages and styling
+        function clearErrors() {
+            // Find all elements with the class 'form-group' that have the 'has-error' class
+            const errorGroups = form.querySelectorAll('.form-group.has-error');
+            errorGroups.forEach(group => {
+                group.classList.remove('has-error'); // Remove the error styling class
+                // Find the error message element within this group
+                const errorElement = group.querySelector('.error-message');
+                if (errorElement) {
+                    errorElement.textContent = ''; // Clear the text
+                    errorElement.style.visibility = 'hidden'; // Hide it
+                }
+            });
+        }
+
+        // --- Optional: Add real-time validation feedback on interaction ---
+
+        // Add 'blur' event listeners to validate a field when the user clicks out of it
+        const fields = [
+            document.getElementById('fullName'),
+            document.getElementById('email'),
+            document.getElementById('password'),
+            document.getElementById('confirmPassword'),
+            document.getElementById('mobileNumber')
+        ];
+
+        fields.forEach(inputElement => {
+            inputElement.addEventListener('blur', () => {
+                // For simplicity in this basic example,
+                // we clear all errors and re-validate the entire form on blur.
+                // A more advanced approach would validate just the current field.
+                 clearErrors();
+                 validateForm();
+            });
+
+            // Add 'input' event listeners to clear errors as the user types
+            inputElement.addEventListener('input', () => {
+                // Clear errors for this specific input as the user starts typing
+                 clearError(inputElement);
+
+                 // Special case: if password or confirm password changes, re-validate both
+                 if (inputElement.id === 'password' || inputElement.id === 'confirmPassword') {
+                     // Re-validate confirm password if password changes and vice versa
+                     validatePasswordMatch();
+                 }
+            });
+        });
+
+        // Helper function to specifically validate password and confirm password match
+        function validatePasswordMatch() {
+             const passwordInput = document.getElementById('password');
+             const confirmPasswordInput = document.getElementById('confirmPassword');
+             const password = passwordInput.value.trim();
+             const confirmPassword = confirmPasswordInput.value.trim();
+
+             // Only validate match if both fields have content
+             if (password !== '' && confirmPassword !== '') {
+                 if (password !== confirmPassword) {
+                     displayError(confirmPasswordInput, 'Passwords do not match.');
+                 } else {
+                     // Clear error if they now match (and weren't empty)
+                      clearError(confirmPasswordInput);
+                 }
+             } else if (confirmPassword !== '' && password === '') {
+                  // If confirm password has text but password is empty, show password required error
+                   displayError(passwordInput, 'Password is required.');
+             } else if (password !== '' && confirmPassword === '') {
+                   // If password has text but confirm password is empty, show confirm password required error
+                    displayError(confirmPasswordInput, 'Confirm Password is required.');
+             }
+        }
+
+
+    </script>
+
+</body>
+</html>
